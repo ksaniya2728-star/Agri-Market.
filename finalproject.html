@@ -1,0 +1,2910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agri-Market - Your Farming Companion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7f9;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Login Page Styles */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+        }
+
+        .login-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .login-form h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2E7D32;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #2E7D32;
+        }
+
+        .btn-small {
+            padding: 8px 12px;
+            font-size: 14px;
+        }
+
+        .btn-red {
+            background-color: #f44336;
+        }
+
+        .btn-red:hover {
+            background-color: #d32f2f;
+        }
+
+        .btn-blue {
+            background-color: #2196F3;
+        }
+
+        .btn-blue:hover {
+            background-color: #0b7dda;
+        }
+
+        .btn-orange {
+            background-color: #FF9800;
+        }
+
+        .btn-orange:hover {
+            background-color: #F57C00;
+        }
+
+        /* Language Selector Styles */
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .language-btn {
+            background: #f1f8e9;
+            border: 1px solid #c5e1a5;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 500;
+        }
+
+        .language-btn:hover {
+            background: #dcedc8;
+        }
+
+        .language-options {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            width: 150px;
+            margin-top: 5px;
+            z-index: 100;
+        }
+
+        .language-options.show {
+            display: block;
+        }
+
+        .language-option {
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .language-option:hover {
+            background: #f1f8e9;
+        }
+
+        /* Main Dashboard Styles */
+        .dashboard {
+            display: none;
+        }
+
+        .header {
+            background-color: #2E7D32;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .weather-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .weather-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            min-width: 250px;
+            margin: 10px;
+            text-align: center;
+        }
+
+        .weather-card h3 {
+            margin-bottom: 15px;
+            color: #2E7D32;
+        }
+
+        .weather-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .option-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            min-width: 300px;
+            margin: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .option-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .option-card i {
+            font-size: 3rem;
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+
+        .option-card h3 {
+            margin-bottom: 10px;
+            color: #2E7D32;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            overflow: auto;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .crop-list, .product-list, .scheme-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .crop-item, .product-item, .scheme-item {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 15px;
+            width: calc(50% - 20px);
+            min-width: 250px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-links, .scheme-actions {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        /* Scheme-specific styles */
+        .scheme-filter {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .filter-option {
+            background: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            border: 1px solid #c8e6c9;
+            transition: all 0.3s;
+        }
+
+        .filter-option:hover, .filter-option.active {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .scheme-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-left: 10px;
+        }
+
+        .status-active {
+            background-color: #C8E6C9;
+            color: #2E7D32;
+        }
+
+        .status-upcoming {
+            background-color: #FFF9C4;
+            color: #F57F17;
+        }
+
+        .status-closed {
+            background-color: #FFCDD2;
+            color: #C62828;
+        }
+
+        .application-form {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        /* Crop Calendar Styles */
+        .calendar-container {
+            margin-top: 20px;
+        }
+
+        .calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .calendar-month {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2E7D32;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+            background-color: #E8F5E9;
+            border-radius: 4px;
+        }
+
+        .calendar-day {
+            height: 80px;
+            border: 1px solid #ddd;
+            padding: 5px;
+            border-radius: 4px;
+            background-color: white;
+            overflow-y: auto;
+        }
+
+        .calendar-day.empty {
+            background-color: #f9f9f9;
+            border: none;
+        }
+
+        .day-number {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .calendar-event {
+            font-size: 0.75rem;
+            padding: 2px 4px;
+            margin-bottom: 2px;
+            border-radius: 3px;
+            background-color: #C8E6C9;
+            cursor: pointer;
+        }
+
+        .calendar-event.high-priority {
+            background-color: #FFCDD2;
+        }
+
+        .calendar-event.medium-priority {
+            background-color: #FFF9C4;
+        }
+
+        /* Reminders List Styles */
+        .reminders-list {
+            margin-top: 20px;
+        }
+
+        .reminder-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .reminder-details {
+            flex: 1;
+        }
+
+        .reminder-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .reminder-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .reminder-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .priority-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-left: 10px;
+        }
+
+        .priority-high {
+            background-color: #FFCDD2;
+            color: #C62828;
+        }
+
+        .priority-medium {
+            background-color: #FFF9C4;
+            color: #F57F17;
+        }
+
+        .priority-low {
+            background-color: #C8E6C9;
+            color: #2E7D32;
+        }
+
+        /* Reminder Form Styles */
+        .reminder-form {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        /* Rating System Styles */
+        .rating-container {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f8fff8;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .rating-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2E7D32;
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 5px;
+            margin: 10px 0;
+        }
+
+        .rating-star {
+            color: #ddd;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: color 0.2s;
+        }
+
+        .rating-star:hover,
+        .rating-star.active {
+            color: #FFD700;
+        }
+
+        .rating-feedback {
+            margin-top: 10px;
+            display: none;
+        }
+
+        .rating-feedback textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .rating-summary {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .average-rating {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2E7D32;
+        }
+
+        .rating-count {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Disease Detection Styles */
+        .upload-area {
+            border: 2px dashed #4CAF50;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            margin: 20px 0;
+            background-color: #f9fdf8;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            position: relative;
+        }
+
+        .upload-area:hover {
+            background-color: #e8f5e9;
+        }
+
+        .upload-area i {
+            font-size: 3rem;
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+
+        .upload-area p {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .upload-area.has-image {
+            border-style: solid;
+        }
+
+        .preview-container {
+            display: none;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .results-container {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f9fdf8;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .disease-result {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .disease-name {
+            font-weight: bold;
+            color: #2E7D32;
+            font-size: 1.2rem;
+        }
+
+        .confidence {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #e8f5e9;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            margin-left: 10px;
+        }
+
+        .treatment-list {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+
+        .treatment-list li {
+            margin-bottom: 8px;
+        }
+
+        .detection-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: none;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4CAF50;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* History Section */
+        .history-container {
+            margin-top: 30px;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+
+        .history-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+
+        .history-item:hover {
+            background: #f9f9f9;
+        }
+
+        .history-date {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .history-disease {
+            font-weight: bold;
+            color: #2E7D32;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .weather-info, .options {
+                flex-direction: column;
+            }
+            
+            .crop-item, .product-item, .scheme-item {
+                width: 100%;
+            }
+            
+            .product-links, .scheme-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .language-selector {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 15px;
+                display: flex;
+                justify-content: center;
+            }
+            
+            .calendar-day {
+                height: 60px;
+                font-size: 0.8rem;
+            }
+            
+            .reminder-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .reminder-actions {
+                margin-top: 10px;
+                align-self: flex-end;
+            }
+
+            .detection-buttons {
+                flex-direction: column;
+            }
+            
+            .filter-options {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div class="login-container" id="loginPage">
+        <div class="login-form">
+            <div class="language-selector">
+                <div class="language-btn" id="languageBtn">
+                    <i class="fas fa-globe"></i>
+                    <span id="currentLanguage">English</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="language-options" id="languageOptions">
+                    <div class="language-option" data-lang="en">
+                        <span>English</span>
+                    </div>
+                    <div class="language-option" data-lang="hi">
+                        <span>हिन्दी (Hindi)</span>
+                    </div>
+                    <div class="language-option" data-lang="te">
+                        <span>తెలుగు (Telugu)</span>
+                    </div>
+                    <div class="language-option" data-lang="kn">
+                        <span>ಕನ್ನಡ (Kannada)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <h1 id="loginTitle">Agri-Market <i class="fas fa-leaf"></i></h1>
+            <form id="loginForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName" id="labelFirstName">First Name</label>
+                        <input type="text" id="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName" id="labelLastName">Last Name</label>
+                        <input type="text" id="lastName" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="gender" id="labelGender">Gender</label>
+                    <select id="gender" required>
+                        <option value="" id="optionSelectGender">Select Gender</option>
+                        <option value="male" id="optionMale">Male</option>
+                        <option value="female" id="optionFemale">Female</option>
+                        <option value="other" id="optionOther">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" id="labelEmail">Email ID</label>
+                    <input type="email" id="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" id="labelPassword">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginId" id="labelLoginId">Login ID</label>
+                    <input type="text" id="loginId" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword" id="labelLoginPassword">Login Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="location" id="labelLocation">Location/City</label>
+                    <input type="text" id="location" required>
+                </div>
+                
+                <button type="submit" class="btn" id="btnLogin">Login / Register</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div class="dashboard" id="dashboard">
+        <div class="header">
+            <div class="language-selector">
+                <div class="language-btn" id="dashboardLanguageBtn">
+                    <i class="fas fa-globe"></i>
+                    <span id="dashboardCurrentLanguage">English</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="language-options" id="dashboardLanguageOptions">
+                    <div class="language-option" data-lang="en">
+                        <span>English</span>
+                    </div>
+                    <div class="language-option" data-lang="hi">
+                        <span>हिन्दी (Hindi)</span>
+                    </div>
+                    <div class="language-option" data-lang="te">
+                        <span>తెలుగు (Telugu)</span>
+                    </div>
+                    <div class="language-option" data-lang="kn">
+                        <span>ಕನ್ನಡ (Kannada)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <h1 id="dashboardTitle">WELCOME TO <strong>AGRI-MARKET</strong></h1>
+            <p id="dashboardSubtitle">Your one-stop solution for agricultural needs</p>
+        </div>
+        
+        <div class="container">
+            <div class="weather-info">
+                <div class="weather-card">
+                    <h3><i class="fas fa-temperature-high"></i> <span id="tempLabel">Real-Time Temperature</span></h3>
+                    <div class="weather-value" id="temperature">28°C</div>
+                </div>
+                
+                <div class="weather-card">
+                    <h3><i class="fas fa-cloud-sun"></i> <span id="climateLabel">Climate Condition</span></h3>
+                    <div class="weather-value" id="climate">Sunny</div>
+                </div>
+                
+                <div class="weather-card">
+                    <h3><i class="fas fa-map-marker-alt"></i> <span id="locationLabel">Your Location</span></h3>
+                    <div class="weather-value" id="userLocation">City, Country</div>
+                </div>
+            </div>
+            
+            <div class="options">
+                <div class="option-card" onclick="openModal('cropRecommendationModal')">
+                    <i class="fas fa-seedling"></i>
+                    <h3 id="cropRecommendationLabel">Crop Recommendations</h3>
+                    <p id="cropRecommendationDesc">Get suggestions for the best crops to grow</p>
+                </div>
+                
+                <div class="option-card" onclick="openModal('buyProductsModal')">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3 id="buyProductsLabel">Buy Agri Products</h3>
+                    <p id="buyProductsDesc">Purchase insecticides, pesticides, and more</p>
+                </div>
+                
+                <div class="option-card" onclick="openModal('viewCropsModal')">
+                    <i class="fas fa-tractor"></i>
+                    <h3 id="viewCropsLabel">View Agricultural Crops</h3>
+                    <p id="viewCropsDesc">Explore various crops and their details</p>
+                </div>
+                
+                <div class="option-card" onclick="openModal('cropCalendarModal')">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h3 id="cropCalendarLabel">Crop Calendar & Reminders</h3>
+                    <p id="cropCalendarDesc">Schedule and track your farming activities</p>
+                </div>
+
+                <div class="option-card" onclick="openModal('diseaseDetectionModal')">
+                    <i class="fas fa-bug"></i>
+                    <h3 id="diseaseDetectionLabel">Crop Disease Detection</h3>
+                    <p id="diseaseDetectionDesc">Detect diseases from crop images</p>
+                </div>
+
+                <!-- New Option Card for Government Schemes -->
+                <div class="option-card" onclick="openModal('governmentSchemesModal')">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <h3 id="governmentSchemesLabel">Government Schemes</h3>
+                    <p id="governmentSchemesDesc">Discover and apply for agricultural schemes</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Crop Recommendation Modal -->
+    <div id="cropRecommendationModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('cropRecommendationModal')">&times;</span>
+            <h2 id="cropModalTitle">Crop Recommendation</h2>
+            <form id="cropForm">
+                <div class="form-group">
+                    <label for="cropLocation" id="labelCropLocation">Location/City/District</label>
+                    <input type="text" id="cropLocation" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="fieldArea" id="labelFieldArea">Field Area (acres)</label>
+                    <input type="number" id="fieldArea" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="soilType" id="labelSoilType">Soil Type</label>
+                    <select id="soilType" required>
+                        <option value="" id="optionSelectSoil">Select Soil Type</option>
+                        <option value="sandy" id="optionSandy">Sandy</option>
+                        <option value="clay" id="optionClay">Clay</option>
+                        <option value="loamy" id="optionLoamy">Loamy</option>
+                        <option value="silty" id="optionSilty">Silty</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phLevel" id="labelPHLevel">pH Level</label>
+                    <input type="number" id="phLevel" step="0.1" min="0" max="14" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="rainfall" id="labelRainfall">Annual Rainfall (mm)</label>
+                    <input type="number" id="rainfall" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="avgTemp" id="labelAvgTemp">Average Temperature (°C)</label>
+                    <input type="number" id="avgTemp" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="budget" id="labelBudget">Budget (₹)</label>
+                    <input type="number" id="budget" required>
+                </div>
+                
+                <button type="submit" class="btn" id="btnGetRecommendations">Get Recommendations</button>
+            </form>
+            
+            <div id="recommendationResults" style="margin-top: 20px; display: none;">
+                <h3 id="recommendedCropsLabel">Recommended Crops</h3>
+                <div class="crop-list" id="cropResultsList">
+                    <!-- Results will be inserted here by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Buy Products Modal -->
+    <div id="buyProductsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('buyProductsModal')">&times;</span>
+            <h2 id="productsModalTitle">Buy Agricultural Products</h2>
+            <div class="product-list">
+                <div class="product-item">
+                    <h4 id="insecticidesLabel">Insecticides</h4>
+                    <p id="insecticidesDesc">Products for controlling insects and pests</p>
+                    <div class="product-links">
+                        <a href="https://www.amazon.com/s?k=agricultural+insecticides" class="btn" target="_blank" id="amazonInsecticides">Buy on Amazon</a>
+                        <a href="https://www.flipkart.com/search?q=agricultural+insecticides" class="btn" target="_blank" id="flipkartInsecticides">Buy on Flipkart</a>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <h4 id="pesticidesLabel">Pesticides</h4>
+                    <p id="pesticidesDesc">Products for pest control and disease prevention</p>
+                    <div class="product-links">
+                        <a href="https://www.amazon.com/s?k=agricultural+pesticides" class="btn" target="_blank" id="amazonPesticides">Buy on Amazon</a>
+                        <a href="https://www.flipkart.com/search?q=agricultural+pesticides" class="btn" target="_blank" id="flipkartPesticides">Buy on Flipkart</a>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <h4 id="fertilizersLabel">Fertilizers</h4>
+                    <p id="fertilizersDesc">Nutrients for plant growth and soil health</p>
+                    <div class="product-links">
+                        <a href="https://www.amazon.com/s?k=agricultural+fertilizers" class="btn" target="_blank" id="amazonFertilizers">Buy on Amazon</a>
+                        <a href="https://www.flipkart.com/search?q=agricultural+fertilizers" class="btn" target="_blank" id="flipkartFertilizers">Buy on Flipkart</a>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <h4 id="catalystsLabel">Growth Catalysts</h4>
+                    <p id="catalystsDesc">Enhance crop growth and yield</p>
+                    <div class="product-links">
+                        <a href="https://www.amazon.com/s?k=plant+growth+catalysts" class="btn" target="_blank" id="amazonCatalysts">Buy on Amazon</a>
+                        <a href="https://www.flipkart.com/search?q=plant+growth+catalysts" class="btn" target="_blank" id="flipkartCatalysts">Buy on Flipkart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Crops Modal -->
+    <div id="viewCropsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('viewCropsModal')">&times;</span>
+            <h2 id="cropsModalTitle">Agricultural Crops</h2>
+            <div class="crop-list">
+                <div class="crop-item">
+                    <h4>Wheat</h4>
+                    <p><strong id="durationLabel">Duration:</strong> 120 days</p>
+                    <p><strong id="soilTypeLabel">Soil Type:</strong> Loamy</p>
+                    <p><strong id="profitLabel">Profit/Acre:</strong> ₹25,000</p>
+                    <p><strong id="seasonLabel">Season:</strong> Winter</p>
+                    <p><strong id="phLabel">pH Level:</strong> 6.0-7.5</p>
+                    <a href="https://www.amazon.com/s?k=wheat+seeds" class="btn" target="_blank" id="buySeedsLabel">Buy Seeds</a>
+                </div>
+                <div class="crop-item">
+                    <h4>Rice</h4>
+                    <p><strong id="durationLabel2">Duration:</strong> 150 days</p>
+                    <p><strong id="soilTypeLabel2">Soil Type:</strong> Clay</p>
+                    <p><strong id="profitLabel2">Profit/Acre:</strong> ₹30,000</p>
+                    <p><strong id="seasonLabel2">Season:</strong> Monsoon</p>
+                    <p><strong id="phLabel2">pH Level:</strong> 5.0-6.5</p>
+                    <a href="https://www.amazon.com/s?k=rice+seeds" class="btn" target="_blank" id="buySeedsLabel2">Buy Seeds</a>
+                </div>
+                <div class="crop-item">
+                    <h4>Corn</h4>
+                    <p><strong id="durationLabel3">Duration:</strong> 90 days</p>
+                    <p><strong id="soilTypeLabel3">Soil Type:</strong> Well-drained</p>
+                    <p><strong id="profitLabel3">Profit/Acre:</strong> ₹35,000</p>
+                    <p><strong id="seasonLabel3">Season:</strong> Summer</p>
+                    <p><strong id="phLabel3">pH Level:</strong> 5.8-7.0</p>
+                    <a href="https://www.amazon.com/s?k=corn+seeds" class="btn" target="_blank" id="buySeedsLabel3">Buy Seeds</a>
+                </div>
+                <div class="crop-item">
+                    <h4>Soybean</h4>
+                    <p><strong id="durationLabel4">Duration:</strong> 100 days</p>
+                    <p><strong id="soilTypeLabel4">Soil Type:</strong> Loamy</p>
+                    <p><strong id="profitLabel4">Profit/Acre:</strong> ₹28,000</p>
+                    <p><strong id="seasonLabel4">Season:</strong> Summer</p>
+                    <p><strong id="phLabel4">pH Level:</strong> 6.0-7.0</p>
+                    <a href="https://www.amazon.com/s?k=soybean+seeds" class="btn" target="_blank" id="buySeedsLabel4">Buy Seeds</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Crop Calendar & Reminders Modal -->
+    <div id="cropCalendarModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('cropCalendarModal')">&times;</span>
+            <h2 id="calendarModalTitle">Crop Calendar & Reminders</h2>
+            
+            <div class="reminder-form">
+                <h3 id="addReminderLabel">Add New Reminder</h3>
+                <form id="reminderForm">
+                    <div class="form-group">
+                        <label for="reminderTitle" id="labelReminderTitle">Task Title</label>
+                        <input type="text" id="reminderTitle" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reminderCrop" id="labelReminderCrop">Crop (Optional)</label>
+                        <select id="reminderCrop">
+                            <option value="">Select Crop</option>
+                            <option value="Wheat">Wheat</option>
+                            <option value="Rice">Rice</option>
+                            <option value="Corn">Corn</option>
+                            <option value="Soybean">Soybean</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reminderDate" id="labelReminderDate">Date</label>
+                        <input type="date" id="reminderDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reminderPriority" id="labelReminderPriority">Priority</label>
+                        <select id="reminderPriority" required>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reminderNotes" id="labelReminderNotes">Notes (Optional)</label>
+                        <textarea id="reminderNotes" rows="3"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn" id="btnAddReminder">Add Reminder</button>
+                </form>
+            </div>
+            
+            <div class="calendar-container">
+                <h3 id="calendarTitle">Crop Calendar</h3>
+                <div class="calendar-nav">
+                    <button class="btn btn-small" id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                    <div class="calendar-month" id="currentMonthYear">September 2023</div>
+                    <button class="btn btn-small" id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                
+                <div class="calendar-grid" id="calendarHeader">
+                    <div class="calendar-day-header">Sun</div>
+                    <div class="calendar-day-header">Mon</div>
+                    <div class="calendar-day-header">Tue</div>
+                    <div class="calendar-day-header">Wed</div>
+                    <div class="calendar-day-header">Thu</div>
+                    <div class="calendar-day-header">Fri</div>
+                    <div class="calendar-day-header">Sat</div>
+                </div>
+                
+                <div class="calendar-grid" id="calendarBody">
+                    <!-- Calendar will be generated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="reminders-list">
+                <h3 id="upcomingRemindersLabel">Upcoming Reminders</h3>
+                <div id="remindersContainer">
+                    <!-- Reminders will be inserted here by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Disease Detection Modal -->
+    <div id="diseaseDetectionModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('diseaseDetectionModal')">&times;</span>
+            <h2 id="diseaseDetectionModalTitle">Crop Disease Detection</h2>
+            <p id="diseaseDetectionModalDesc">Upload an image of your crop to detect potential diseases and get treatment recommendations.</p>
+            
+            <div class="upload-area" id="uploadArea">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <h3 id="uploadTitle">Upload Crop Image</h3>
+                <p id="uploadDesc">Click to browse or drag and drop an image</p>
+                <p id="uploadFormat">Supported formats: JPG, PNG, JPEG</p>
+                <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+            </div>
+            
+            <div class="preview-container" id="previewContainer">
+                <img id="previewImage" class="preview-image" src="" alt="Uploaded crop image">
+            </div>
+            
+            <div class="spinner" id="detectionSpinner"></div>
+            
+            <div class="results-container" id="resultsContainer">
+                <h3 id="resultsTitle">Detection Results</h3>
+                <div class="disease-result">
+                    <span class="disease-name" id="detectedDisease">Early Blight</span>
+                    <span class="confidence" id="confidenceLevel">92% confidence</span>
+                    <p id="diseaseDescription">Early blight is a common fungal disease that affects tomatoes, potatoes, and other crops. It appears as concentric dark spots on leaves.</p>
+                
+                    <h4 id="treatmentTitle">Recommended Treatment:</h4>
+                    <ul class="treatment-list" id="treatmentList">
+                        <li id="treatment1">Remove and destroy infected leaves</li>
+                        <li id="treatment2">Apply copper-based fungicides</li>
+                        <li id="treatment3">Improve air circulation around plants</li>
+                        <li id="treatment4">Avoid overhead watering to reduce leaf wetness</li>
+                    </ul>
+                    
+                    <div class="product-links">
+                        <a href="https://www.amazon.com/s?k=copper+fungicide" class="btn" target="_blank" id="buyFungicide">Buy Fungicide</a>
+                        <a href="https://www.flipkart.com/search?q=copper+fungicide" class="btn" target="_blank" id="buyFungicideFlipkart">Buy on Flipkart</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="detection-buttons">
+                <button class="btn btn-blue" id="detectButton" disabled>
+                    <i class="fas fa-search"></i> <span id="detectButtonText">Detect Disease</span>
+                </button>
+                <button class="btn btn-red" id="resetButton">
+                    <i class="fas fa-redo"></i> <span id="resetButtonText">Reset</span>
+                </button>
+            </div>
+            
+            <div class="history-container" id="historyContainer">
+                <h3 id="historyTitle">Detection History</h3>
+                <div id="historyList">
+                    <!-- History items will be inserted here by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Government Schemes Modal -->
+    <div id="governmentSchemesModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('governmentSchemesModal')">&times;</span>
+            <h2 id="schemesModalTitle">Government Schemes for Farmers</h2>
+            <p id="schemesModalDesc">Discover and apply for various government agricultural schemes to support your farming activities.</p>
+            
+            <div class="scheme-filter">
+                <h3 id="filterTitle">Filter Schemes</h3>
+                <div class="filter-options">
+                    <div class="filter-option active" data-filter="all">All Schemes</div>
+                    <div class="filter-option" data-filter="subsidy">Subsidies</div>
+                    <div class="filter-option" data-filter="insurance">Insurance</div>
+                    <div class="filter-option" data-filter="loan">Loans</div>
+                    <div class="filter-option" data-filter="training">Training</div>
+                </div>
+            </div>
+            
+            <div class="scheme-list">
+                <div class="scheme-item" data-type="subsidy">
+                    <h4>PM-KISAN Scheme <span class="scheme-status status-active" id="statusActive">Active</span></h4>
+                    <div class="scheme-details">
+                        <p><strong id="benefitsLabel">Benefits:</strong> ₹6,000 per year in three equal installments</p>
+                        <p><strong id="eligibilityLabel">Eligibility:</strong> Small and marginal farmers</p>
+                        <p><strong id="deadlineLabel">Deadline:</strong> <span id="ongoingDeadline">Ongoing</span></p>
+                    </div>
+                    <div class="scheme-actions">
+                        <button class="btn btn-orange" onclick="showSchemeApplication('pmKisan')" id="applyNowBtn">Apply Now</button>
+                        <button class="btn btn-blue" onclick="showSchemeDetails('pmKisan')" id="moreInfoBtn">More Information</button>
+                    </div>
+                    
+                    <div id="pmKisan-form" class="application-form">
+                        <h4>Apply for PM-KISAN Scheme</h4>
+                        <form id="pmKisanForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="applicantName">Full Name</label>
+                                    <input type="text" id="applicantName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="applicantAadhar">Aadhar Number</label>
+                                    <input type="text" id="applicantAadhar" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="bankAccount">Bank Account Number</label>
+                                    <input type="text" id="bankAccount" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ifscCode">IFSC Code</label>
+                                    <input type="text" id="ifscCode" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="landDetails">Land Details (Survey Number, Area, etc.)</label>
+                                <textarea id="landDetails" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="landRecords">Upload Land Records (PDF, max 2MB)</label>
+                                <input type="file" id="landRecords" accept=".pdf" required>
+                            </div>
+                            <div class="form-buttons">
+                                <button type="submit" class="btn">Submit Application</button>
+                                <button type="button" class="btn btn-red" onclick="hideApplicationForm('pmKisan')">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="scheme-item" data-type="insurance">
+                    <h4>Pradhan Mantri Fasal Bima Yojana <span class="scheme-status status-active">Active</span></h4>
+                    <div class="scheme-details">
+                        <p><strong id="benefitsLabel2">Benefits:</strong> Crop insurance against natural calamities</p>
+                        <p><strong id="eligibilityLabel2">Eligibility:</strong> All farmers growing notified crops</p>
+                        <p><strong id="deadlineLabel2">Deadline:</strong> <span id="ongoingDeadline2">Ongoing</span></p>
+                    </div>
+                    <div class="scheme-actions">
+                        <button class="btn btn-orange" onclick="showSchemeApplication('pmfby')">Apply Now</button>
+                        <button class="btn btn-blue" onclick="showSchemeDetails('pmfby')">More Information</button>
+                    </div>
+                    
+                    <div id="pmfby-form" class="application-form">
+                        <h4>Apply for Pradhan Mantri Fasal Bima Yojana</h4>
+                        <form id="pmfbyForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="insuranceName">Full Name</label>
+                                    <input type="text" id="insuranceName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="insuranceAadhar">Aadhar Number</label>
+                                    <input type="text" id="insuranceAadhar" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="cropType">Crop Type</label>
+                                    <select id="cropType" required>
+                                        <option value="">Select Crop</option>
+                                        <option value="wheat">Wheat</option>
+                                        <option value="rice">Rice</option>
+                                        <option value="corn">Corn</option>
+                                        <option value="cotton">Cotton</option>
+                                        <option value="sugarcane">Sugarcane</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cropArea">Crop Area (acres)</label>
+                                    <input type="number" id="cropArea" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="season">Season</label>
+                                <select id="season" required>
+                                    <option value="">Select Season</option>
+                                    <option value="kharif">Kharif</option>
+                                    <option value="rabi">Rabi</option>
+                                    <option value="zaid">Zaid</option>
+                                </select>
+                            </div>
+                            <div class="form-buttons">
+                                <button type="submit" class="btn">Submit Application</button>
+                                <button type="button" class="btn btn-red" onclick="hideApplicationForm('pmfby')">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="scheme-item" data-type="subsidy">
+                    <h4>Subsidy on Agricultural Machinery <span class="scheme-status status-active">Active</span></h4>
+                    <div class="scheme-details">
+                        <p><strong id="benefitsLabel3">Benefits:</strong> Up to 50% subsidy on farm machinery</p>
+                        <p><strong id="eligibilityLabel3">Eligibility:</strong> All farmers, cooperatives, and FPOs</p>
+                        <p><strong id="deadlineLabel3">Deadline:</strong> 31st March 2024</p>
+                    </div>
+                    <div class="scheme-actions">
+                        <button class="btn btn-orange" onclick="showSchemeApplication('machinery')">Apply Now</button>
+                        <button class="btn btn-blue" onclick="showSchemeDetails('machinery')">More Information</button>
+                    </div>
+                    
+                    <div id="machinery-form" class="application-form">
+                        <h4>Apply for Machinery Subsidy</h4>
+                        <form id="machineryForm">
+                            <div class="form-group">
+                                <label for="machineryType">Type of Machinery</label>
+                                <select id="machineryType" required>
+                                    <option value="">Select Machinery</option>
+                                    <option value="tractor">Tractor</option>
+                                    <option value="harvester">Harvester</option>
+                                    <option value="irrigation">Irrigation System</option>
+                                    <option value="other">Other Equipment</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="estimateCost">Estimated Cost</label>
+                                    <input type="number" id="estimateCost" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="subsidyAmount">Requested Subsidy Amount</label>
+                                    <input type="number" id="subsidyAmount" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="machineryPurpose">Purpose of Machinery</label>
+                                <textarea id="machineryPurpose" required></textarea>
+                            </div>
+                            <div class="form-buttons">
+                                <button type="submit" class="btn">Submit Application</button>
+                                <button type="button" class="btn btn-red" onclick="hideApplicationForm('machinery')">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="scheme-item" data-type="loan">
+                    <h4>Kisan Credit Card (KCC) Scheme <span class="scheme-status status-active">Active</span></h4>
+                    <div class="scheme-details">
+                        <p><strong id="benefitsLabel4">Benefits:</strong> Affordable credit for farmers</p>
+                        <p><strong id="eligibilityLabel4">Eligibility:</strong> Individual farmers, joint borrowers, tenant farmers</p>
+                        <p><strong id="deadlineLabel4">Deadline:</strong> <span id="ongoingDeadline4">Ongoing</span></p>
+                    </div>
+                    <div class="scheme-actions">
+                        <button class="btn btn-orange" onclick="showSchemeApplication('kcc')">Apply Now</button>
+                        <button class="btn btn-blue" onclick="showSchemeDetails('kcc')">More Information</button>
+                    </div>
+                    
+                    <div id="kcc-form" class="application-form">
+                        <h4>Apply for Kisan Credit Card (KCC) Scheme</h4>
+                        <form id="kccForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="kccName">Full Name</label>
+                                    <input type="text" id="kccName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="kccAadhar">Aadhar Number</label>
+                                    <input type="text" id="kccAadhar" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="landHolding">Land Holding (acres)</label>
+                                    <input type="number" id="landHolding" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="annualIncome">Annual Income</label>
+                                    <input type="number" id="annualIncome" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="loanPurpose">Purpose of Loan</label>
+                                <select id="loanPurpose" required>
+                                    <option value="">Select Purpose</option>
+                                    <option value="crop">Crop Production</option>
+                                    <option value="livestock">Livestock</option>
+                                    <option value="fisheries">Fisheries</option>
+                                    <option value="other">Other Agricultural Activities</option>
+                                </select>
+                            </div>
+                            <div class="form-buttons">
+                                <button type="submit" class="btn">Submit Application</button>
+                                <button type="button" class="btn btn-red" onclick="hideApplicationForm('kcc')">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Define crop data with ratings
+        const crops = [
+            {
+                name: "Wheat",
+                duration: "120 days",
+                soilType: "Loamy",
+                profitPerAcre: "₹25,000",
+                season: "Winter",
+                phLevel: "6.0-7.5",
+                seedLink: "https://www.amazon.com/s?k=wheat+seeds",
+                rating: 4.2,
+                ratingCount: 145
+            },
+            {
+                name: "Rice",
+                duration: "150 days",
+                soilType: "Clay",
+                profitPerAcre: "₹30,000",
+                season: "Monsoon",
+                phLevel: "5.0-6.5",
+                seedLink: "https://www.amazon.com/s?k=rice+seeds",
+                rating: 4.5,
+                ratingCount: 210
+            },
+            {
+                name: "Corn",
+                duration: "90 days",
+                soilType: "Well-drained",
+                profitPerAcre: "₹35,000",
+                season: "Summer",
+                phLevel: "5.8-7.0",
+                seedLink: "https://www.amazon.com/s?k=corn+seeds",
+                rating: 4.0,
+                ratingCount: 98
+            },
+            {
+                name: "Soybean",
+                duration: "100 days",
+                soilType: "Loamy",
+                profitPerAcre: "₹28,000",
+                season: "Summer",
+                phLevel: "6.0-7.0",
+                seedLink: "https://www.amazon.com/s?k=soybean+seeds",
+                rating: 4.3,
+                ratingCount: 132
+            }
+        ];
+
+        // Disease database
+        const diseases = [
+            {
+                name: "Early Blight",
+                description: "Early blight is a common fungal disease that affects tomatoes, potatoes, and other crops. It appears as concentric dark spots on leaves.",
+                treatments: [
+                    "Remove and destroy infected leaves",
+                    "Apply copper-based fungicides",
+                    "Improve air circulation around plants",
+                    "Avoid overhead watering to reduce leaf wetness"
+                ],
+                products: [
+                    { name: "Copper Fungicide", amazon: "https://www.amazon.com/s?k=copper+fungicide", flipkart: "https://www.flipkart.com/search?q=copper+fungicide" }
+                ]
+            },
+            {
+                name: "Late Blight",
+                description: "Late blight is a serious fungal disease that affects potatoes and tomatoes. It causes rapid wilting and can destroy entire crops.",
+                treatments: [
+                    "Remove and destroy all infected plants",
+                    "Apply fungicides containing chlorothalonil or mancozeb",
+                    "Ensure proper spacing between plants",
+                    "Water plants at the base to keep foliage dry"
+                ],
+                products: [
+                    { name: "Chlorothalonil Fungicide", amazon: "https://www.amazon.com/s?k=chlorothalonil", flipkart: "https://www.flipkart.com/search?q=chlorothalonil" }
+                ]
+            },
+            {
+                name: "Powdery Mildew",
+                description: "Powdery mildew appears as white powdery spots on leaves and stems. It affects a wide variety of crops including squash, cucumbers, and grapes.",
+                treatments: [
+                    "Apply sulfur or potassium bicarbonate-based fungicides",
+                    "Prune to improve air circulation",
+                    "Avoid excessive nitrogen fertilization",
+                    "Use resistant varieties when available"
+                ],
+                products: [
+                    { name: "Sulfur Fungicide", amazon: "https://www.amazon.com/s?k=sulfur+fungicide", flipkart: "https://www.flipkart.com/search?q=sulfur+fungicide" }
+                ]
+            },
+            {
+                name: "Leaf Spot",
+                description: "Leaf spot diseases cause circular spots on leaves that may be yellow, brown, or black. They affect many different plants.",
+                treatments: [
+                    "Remove infected leaves and debris",
+                    "Apply appropriate fungicides",
+                    "Water plants in the morning to allow leaves to dry",
+                    "Avoid working with plants when they are wet"
+                ],
+                products: [
+                    { name: "General Purpose Fungicide", amazon: "https://www.amazon.com/s?k=plant+fungicide", flipkart: "https://www.flipkart.com/search?q=plant+fungicide" }
+                ]
+            },
+            {
+                name: "Healthy",
+                description: "Your plant appears to be healthy with no signs of common diseases. Continue with your current care regimen.",
+                treatments: [
+                    "Maintain proper watering schedule",
+                    "Monitor plants regularly for early signs of disease",
+                    "Practice crop rotation to prevent disease buildup",
+                    "Keep garden clean of plant debris"
+                ],
+                products: []
+            }
+        ];
+
+        // Language translations
+        const translations = {
+            en: {
+                // Login Page
+                loginTitle: "Agri-Market",
+                labelFirstName: "First Name",
+                labelLastName: "Last Name",
+                labelGender: "Gender",
+                optionSelectGender: "Select Gender",
+                optionMale: "Male",
+                optionFemale: "Female",
+                optionOther: "Other",
+                labelEmail: "Email ID",
+                labelPassword: "Password",
+                labelLoginId: "Login ID",
+                labelLoginPassword: "Login Password",
+                labelLocation: "Location/City",
+                btnLogin: "Login / Register",
+                
+                // Dashboard
+                dashboardTitle: "WELCOME TO AGRI-MARKET",
+                dashboardSubtitle: "Your one-stop solution for agricultural needs",
+                tempLabel: "Real-Time Temperature",
+                climateLabel: "Climate Condition",
+                locationLabel: "Your Location",
+                cropRecommendationLabel: "Crop Recommendations",
+                cropRecommendationDesc: "Get suggestions for the best crops to grow",
+                buyProductsLabel: "Buy Agri Products",
+                buyProductsDesc: "Purchase insecticides, pesticides, and more",
+                viewCropsLabel: "View Agricultural Crops",
+                viewCropsDesc: "Explore various crops and their details",
+                cropCalendarLabel: "Crop Calendar & Reminders",
+                cropCalendarDesc: "Schedule and track your farming activities",
+                diseaseDetectionLabel: "Crop Disease Detection",
+                diseaseDetectionDesc: "Detect diseases from crop images",
+                governmentSchemesLabel: "Government Schemes",
+                governmentSchemesDesc: "Discover and apply for agricultural schemes",
+                
+                // Crop Recommendation Modal
+                cropModalTitle: "Crop Recommendation",
+                labelCropLocation: "Location/City/District",
+                labelFieldArea: "Field Area (acres)",
+                labelSoilType: "Soil Type",
+                optionSelectSoil: "Select Soil Type",
+                optionSandy: "Sandy",
+                optionClay: "Clay",
+                optionLoamy: "Loamy",
+                optionSilty: "Silty",
+                labelPHLevel: "pH Level",
+                labelRainfall: "Annual Rainfall (mm)",
+                labelAvgTemp: "Average Temperature (°C)",
+                labelBudget: "Budget (₹)",
+                btnGetRecommendations: "Get Recommendations",
+                recommendedCropsLabel: "Recommended Crops",
+                
+                // Buy Products Modal
+                productsModalTitle: "Buy Agricultural Products",
+                insecticidesLabel: "Insecticides",
+                insecticidesDesc: "Products for controlling insects and pests",
+                pesticidesLabel: "Pesticides",
+                pesticidesDesc: "Products for pest control and disease prevention",
+                fertilizersLabel: "Fertilizers",
+                fertilizersDesc: "Nutrients for plant growth and soil health",
+                catalystsLabel: "Growth Catalysts",
+                catalystsDesc: "Enhance crop growth and yield",
+                amazonInsecticides: "Buy on Amazon",
+                flipkartInsecticides: "Buy on Flipkart",
+                amazonPesticides: "Buy on Amazon",
+                flipkartPesticides: "Buy on Flipkart",
+                amazonFertilizers: "Buy on Amazon",
+                flipkartFertilizers: "Buy on Flipkart",
+                amazonCatalysts: "Buy on Amazon",
+                flipkartCatalysts: "Buy on Flipkart",
+                
+                // View Crops Modal
+                cropsModalTitle: "Agricultural Crops",
+                durationLabel: "Duration:",
+                soilTypeLabel: "Soil Type:",
+                profitLabel: "Profit/Acre:",
+                seasonLabel: "Season:",
+                phLabel: "pH Level:",
+                buySeedsLabel: "Buy Seeds",
+                
+                // Crop Calendar Modal
+                calendarModalTitle: "Crop Calendar & Reminders",
+                addReminderLabel: "Add New Reminder",
+                labelReminderTitle: "Task Title",
+                labelReminderCrop: "Crop (Optional)",
+                labelReminderDate: "Date",
+                labelReminderPriority: "Priority",
+                labelReminderNotes: "Notes (Optional)",
+                btnAddReminder: "Add Reminder",
+                calendarTitle: "Crop Calendar",
+                upcomingRemindersLabel: "Upcoming Reminders",
+                
+                // Disease Detection Modal
+                diseaseDetectionModalTitle: "Crop Disease Detection",
+                diseaseDetectionModalDesc: "Upload an image of your crop to detect potential diseases and get treatment recommendations.",
+                uploadTitle: "Upload Crop Image",
+                uploadDesc: "Click to browse or drag and drop an image",
+                uploadFormat: "Supported formats: JPG, PNG, JPEG",
+                detectButtonText: "Detect Disease",
+                resetButtonText: "Reset",
+                resultsTitle: "Detection Results",
+                treatmentTitle: "Recommended Treatment:",
+                buyFungicide: "Buy Fungicide",
+                buyFungicideFlipkart: "Buy on Flipkart",
+                historyTitle: "Detection History",
+                noHistoryText: "No detection history yet.",
+                
+                // Government Schemes Modal
+                schemesModalTitle: "Government Schemes for Farmers",
+                schemesModalDesc: "Discover and apply for various government agricultural schemes to support your farming activities.",
+                filterTitle: "Filter Schemes",
+                benefitsLabel: "Benefits:",
+                eligibilityLabel: "Eligibility:",
+                deadlineLabel: "Deadline:",
+                statusActive: "Active",
+                statusUpcoming: "Upcoming",
+                statusClosed: "Closed",
+                applyNowBtn: "Apply Now",
+                moreInfoBtn: "More Information",
+                ongoingDeadline: "Ongoing"
+            },
+            hi: {
+                // Login Page
+                loginTitle: "एग्री-मार्केट",
+                labelFirstName: "पहला नाम",
+                labelLastName: "उपनाम",
+                labelGender: "लिंग",
+                optionSelectGender: "लिंग चुनें",
+                optionMale: "पुरुष",
+                optionFemale: "महिला",
+                optionOther: "अन्य",
+                labelEmail: "ईमेल आईडी",
+                labelPassword: "पासवर्ड",
+                labelLoginId: "लॉगिन आईडी",
+                labelLoginPassword: "लॉगिन पासवर्ड",
+                labelLocation: "स्थान/शहर",
+                btnLogin: "लॉगिन / पंजीकरण",
+                
+                // Dashboard
+                dashboardTitle: "एग्री-मार्केट में आपका स्वागत है",
+                dashboardSubtitle: "कृषि संबंधी आवश्यकताओं के लिए आपका एकमात्र समाधान",
+                tempLabel: "रीयल-टाइम तापमान",
+                climateLabel: "जलवायु की स्थिति",
+                locationLabel: "आपका स्थान",
+                cropRecommendationLabel: "फसल सिफारिशें",
+                cropRecommendationDesc: "उगाने के लिए सर्वोत्तम फसलों के सुझाव प्राप्त करें",
+                buyProductsLabel: "कृषि उत्पाद खरीदें",
+                buyProductsDesc: "कीटनाशक, कीटनाशक और अधिक खरीदें",
+                viewCropsLabel: "कृषि फसलें देखें",
+                viewCropsDesc: "विभिन्न फसलों और उनके विवरण का अन्वेषण करें",
+                cropCalendarLabel: "फसल कैलेंडर और अनुस्मारक",
+                cropCalendarDesc: "अपनी खेती की गतिविधियों को अनुसूचित और ट्रैक करें",
+                diseaseDetectionLabel: "फसल रोग पहचान",
+                diseaseDetectionDesc: "फसल छवियों से रोगों का पता लगाएं",
+                governmentSchemesLabel: "सरकारी योजनाएं",
+                governmentSchemesDesc: "कृषि योजनाओं की खोज करें और आवेदन करें",
+                
+                // Crop Recommendation Modal
+                cropModalTitle: "फसल सिफारिश",
+                labelCropLocation: "स्थान/शहर/जिला",
+                labelFieldArea: "खेत का क्षेत्रफल (एकड़)",
+                labelSoilType: "मिट्टी का प्रकार",
+                optionSelectSoil: "मिट्टी का प्रकार चुनें",
+                optionSandy: "बलुई",
+                optionClay: "चिकनी",
+                optionLoamy: "दोमट",
+                optionSilty: "गाद",
+                labelPHLevel: "पीएच स्तर",
+                labelRainfall: "वार्षिक वर्षा (मिमी)",
+                labelAvgTemp: "औसत तापमान (°C)",
+                labelBudget: "बजट (₹)",
+                btnGetRecommendations: "सिफारिशें प्राप्त करें",
+                recommendedCropsLabel: "सुझाई गई फसलें",
+                
+                // Buy Products Modal
+                productsModalTitle: "कृषि उत्पाद खरीदें",
+                insecticidesLabel: "कीटनाशक",
+                insecticidesDesc: "कीड़ों और कीटों को नियंत्रित करने के लिए उत्पाद",
+                pesticidesLabel: "पेस्टिसाइड्स",
+                pesticidesDesc: "कीट नियंत्रण और रोग निवारण के लिए उत्पाद",
+                fertilizersLabel: "उर्वरक",
+                fertilizersDesc: "पौधों की वृद्धि और मिट्टी के स्वास्थ्य के लिए पोषक तत्व",
+                catalystsLabel: "विकास उत्प्रेरक",
+                catalystsDesc: "फसल विकास और उपज बढ़ाएँ",
+                amazonInsecticides: "अमेज़न पर खरीदें",
+                flipkartInsecticides: "फ्लिपकार्ट पर खरीदें",
+                amazonPesticides: "अमेज़न पर खरीदें",
+                flipkartPesticides: "फ्लिपकार्ट पर खरीदें",
+                amazonFertilizers: "अमेज़न पर खरीदें",
+                flipkartFertilizers: "फ्लिपकार्ट पर खरीदें",
+                amazonCatalysts: "अमेज़न पर खरीदें",
+                flipkartCatalysts: "फ्लिपकार्ट पर खरीदें",
+                
+                // View Crops Modal
+                cropsModalTitle: "कृषि फसलें",
+                durationLabel: "अवधि:",
+                soilTypeLabel: "मिट्टी का प्रकार:",
+                profitLabel: "लाभ/एकड़:",
+                seasonLabel: "मौसम:",
+                phLabel: "पीएH स्तर:",
+                buySeedsLabel: "बीज खरीदें",
+                
+                // Crop Calendar Modal
+                calendarModalTitle: "फसल कैलेंडर और अनुस्मारक",
+                addReminderLabel: "नया अनुस्मारक जोड़ें",
+                labelReminderTitle: "कार्य शीर्षक",
+                labelReminderCrop: "फसल (वैकल्पिक)",
+                labelReminderDate: "तारीख",
+                labelReminderPriority: "प्राथमिकता",
+                labelReminderNotes: "नोट्स (वैकल्पिक)",
+                btnAddReminder: "अनुस्मारक जोड़ें",
+                calendarTitle: "फसल कैलेंडर",
+                upcomingRemindersLabel: "आगामी अनुस्मारक",
+                
+                // Disease Detection Modal
+                diseaseDetectionModalTitle: "फसल रोग पहचान",
+                diseaseDetectionModalDesc: "संभावित रोगों का पता लगाने और उपचार की सिफारिशें प्राप्त करने के लिए अपनी फसल की एक छवि अपलोड करें।",
+                uploadTitle: "फसल छवि अपलोड करें",
+                uploadDesc: "ब्राउज़ करने के लिए क्लिक करें या छवि को खींचें और छोड़ें",
+                uploadFormat: "समर्थित प्रारूप: JPG, PNG, JPEG",
+                detectButtonText: "रोग का पता लगाएं",
+                resetButtonText: "रीसेट",
+                resultsTitle: "पहचान परिणाम",
+                treatmentTitle: "अनुशंसित उपचार:",
+                buyFungicide: "फफूंदनाशक खरीदें",
+                buyFungicideFlipkart: "फ्लिपकार्ट पर खरीदें",
+                historyTitle: "पहचान इतिहас",
+                noHistoryText: "अभी तक कोई पहचान इतिहास नहीं है।",
+                
+                // Government Schemes Modal
+                schemesModalTitle: "किसानों के लिए सरकारी योजनाएं",
+                schemesModalDesc: "अपनी खेती की गतिविधियों का समर्थन करने के लिए विभिन्न सरकारी कृषि योजनाओं की खोज करें और आवेदन करें।",
+                filterTitle: "योजनाओं को फ़िल्टर करें",
+                benefitsLabel: "लाभ:",
+                eligibilityLabel: "पात्रता:",
+                deadlineLabel: "अंतिम तिथि:",
+                statusActive: "सक्रिय",
+                statusUpcoming: "आगामी",
+                statusClosed: "बंद",
+                applyNowBtn: "अभी आवेदन करें",
+                moreInfoBtn: "अधिक जानकारी",
+                ongoingDeadline: "चल रही है"
+            },
+            te: {
+                // Login Page
+                loginTitle: "ఏగ్రీ-మార్కెట్",
+                labelFirstName: "ప్రథమ నామం",
+                labelLastName: "చివరి పేరు",
+                labelGender: "లింగం",
+                optionSelectGender: "లింగాన్ని ఎంచుకోండి",
+                optionMale: "పురుషుడు",
+                optionFemale: "స్త్రీ",
+                optionOther: "ఇతర",
+                labelEmail: "ఇమెయిల్ ID",
+                labelPassword: "పాస్వర్డ్",
+                labelLoginId: "లాగిన్ ID",
+                labelLoginPassword: "లాగిన్ పాస్వర్డ్",
+                labelLocation: "స్థానం/నగరం",
+                btnLogin: "లాగిన్ / నమోదు",
+                
+                // Dashboard
+                dashboardTitle: "ఏగ్రీ-మార్కెట్ కు స్వాగతం",
+                dashboardSubtitle: "కృషి అవసరాలకు మీ వన్-స్టాప్ సొల్యూషన్",
+                tempLabel: "నిజ-సమయ ఉష్ణోగ్రత",
+                climateLabel: "వాతావరణ స్థితి",
+                locationLabel: "మీ స్థానం",
+                cropRecommendationLabel: "పంట సిఫార్సులు",
+                cropRecommendationDesc: "వ్యవసాయం చేయడానికి ఉత్తమ పంటల సూచనలను పొందండి",
+                buyProductsLabel: "కృషి ఉత్పత్తులను కొనండి",
+                buyProductsDesc: "కీటకనాశకాలు, పురుగుమందులు మరిన్ని కొనండి",
+                viewCropsLabel: "కృషి పంటలను వీక్షించండి",
+                viewCropsDesc: "వివిధ పంటలు మరియు వాటి వివరాలను అన్వేషించండి",
+                cropCalendarLabel: "పంట క్యాలెండర్ & రిమైండర్స్",
+                cropCalendarDesc: "మీ వ్యవసాయ కార్యకలాపాలను షెడ్యూల్ చేయండి మరియు ట్రాక్ చేయండి",
+                diseaseDetectionLabel: "పంట రోగ గుర్తింపు",
+                diseaseDetectionDesc: "పంట చిత్రాల నుండి రోగాలను గుర్తించండి",
+                governmentSchemesLabel: "ప్రభుత్వ యోజనలు",
+                governmentSchemesDesc: "కృషి యోజనలను కనుగొని దరఖాస్తు చేసుకోండి",
+                
+                // Crop Recommendation Modal
+                cropModalTitle: "పంట సిఫార్సు",
+                labelCropLocation: "స్థానం/నగరం/జిల్లా",
+                labelFieldArea: "ఫీల్డ్ ప్రాంతం (ఎకరాలు)",
+                labelSoilType: "నేల రకం",
+                optionSelectSoil: "నేల రకాన్ని ఎంచుకోండి",
+                optionSandy: "ఇసుక",
+                optionClay: "క్లే",
+                optionLoamy: "దోఆట",
+                optionSilty: "సిల్ట్",
+                labelPHLevel: "pH స్థాయి",
+                labelRainfall: "వార్షిక వర్షపాతం (mm)",
+                labelAvgTemp: "సగటు ఉష్ణోగ్రత (°C)",
+                labelBudget: "బడ్జెట్ (₹)",
+                btnGetRecommendations: "సిఫార్సులను పొందండి",
+                recommendedCropsLabel: "సిఫారసు చేయబడిన పంటలు",
+                
+                // Buy Products Modal
+                productsModalTitle: "కృషి ఉత్పత్తులను కొనండి",
+                insecticidesLabel: "కీటకనాశకాలు",
+                insecticidesDesc: "కీటకాలు మరియు పురుగులను నియంత్రించడానికి ఉత్పత్తులు",
+                pesticidesLabel: "పురుగుమందులు",
+                pesticidesDesc: "కీటక నియంత్రణ మరియు రోగ నివారణ కోసం ఉత్పత్తులు",
+                fertilizersLabel: "ఎరువులు",
+                fertilizersDesc: "మొక్కల వృద్ధి మరియు నేల ఆరోగ్యానికి పోషకాలు",
+                catalystsLabel: "వృద్ధి ఉత్ప్రేరకాలు",
+                catalystsDesc: "పంట వృద్ధి మరియు దిగుబడిని పెంపు",
+                amazonInsecticides: "అమెజాన్ నుండి కొనండి",
+                flipkartInsecticides: "ఫ్లిప్కార్ట్ నుండి కొనండი",
+                amazonPesticides: "అमెజాన్ నుండి కొనండి",
+                flipkartPesticides: "ఫ్లిప్కార్ట్ నుండి కొనండి",
+                amazonFertilizers: "అमెజాన్ నుండి కొనండి",
+                flipkartFertilizers: "ఫ్లిప్కార్ట్ నుండి కొనండి",
+                amazonCatalysts: "అमెజాన్ నుండి కొనండి",
+                flipkartCatalysts: "ఫ్లిప్కార్ట్ నుండి కొనండి",
+                
+                // View Crops Modal
+                cropsModalTitle: "కృషి పంటలు",
+                durationLabel: "వ్యవధి:",
+                soilTypeLabel: "నేల రకం:",
+                profitLabel: "లాభం/ఎకరం:",
+                seasonLabel: "ఋతువు:",
+                phLabel: "pH స్థాయి:",
+                buySeedsLabel: "విత్తనాలు కొనండి",
+                
+                // Crop Calendar Modal
+                calendarModalTitle: "పంట క్యాలెండర్ & రిమైండర్స్",
+                addReminderLabel: "కొత్త రిమైండర్ జోడించండి",
+                labelReminderTitle: "టాస్క్ శీర్షిక",
+                labelReminderCrop: "పంట (ఐచ్ఛికం)",
+                labelReminderDate: "తేదీ",
+                labelReminderPriority: "ప్రాధాన్యత",
+                labelReminderNotes: "నోట్స్ (ఐచ్ఛికం)",
+                btnAddReminder: "రిమైండర్ జోడించండి",
+                calendarTitle: "పంట క్యాలెండర్",
+                upcomingRemindersLabel: "రాబోయే రిమైండర్స్",
+                
+                // Disease Detection Modal
+                diseaseDetectionModalTitle: "పంట రోగ గుర్తింపు",
+                diseaseDetectionModalDesc: "సంభావ్య రోగాలను గుర్తించడానికి మరియు చికిత్స సిఫార్సులను పొందడానికి మీ పంట యొక్క చిత్రాన్ని అప్లోడ్ చేయండి.",
+                uploadTitle: "పంట చిత్రం అప్లోడ్ చేయండి",
+                uploadDesc: "బ్రౌజ్ చేయడానికి క్లిక్ చేయండి లేదా చిత్రాన్ని డ్రాగ్ మరియు డ్రాప్ చేయండి",
+                uploadFormat: "సపోర్టెడ్ ఫార్మాట్లు: JPG, PNG, JPEG",
+                detectButtonText: "రోగాన్ని గుర్తించండి",
+                resetButtonText: "రీసెట్",
+                resultsTitle: "గుర్తింపు ఫలితాలు",
+                treatmentTitle: "సిఫారసు చేయబడిన చికిత్స:",
+                buyFungicide: "ఫంగిసైడ్ కొనండి",
+                buyFungicideFlipkart: "ఫ్లిప్కార్ట్ నుండి కొనండి",
+                historyTitle: "గుర్తింపు చరిత్ర",
+                noHistoryText: "ఇంకా గుర్తింపు చరిత్ర లేదు.",
+                
+                // Government Schemes Modal
+                schemesModalTitle: "రైతుల కోసం ప్రభుత్వ యోజనలు",
+                schemesModalDesc: "మీ వ్యవసాయ కార్యకలాపాలకు మద్దతు ఇవ్వడానికి వివిధ ప్రభుత్వ వ్యవసాయ యోజనలను కనుగొని దరఖాస్తు చేసుకోండి.",
+                filterTitle: "యోజనలను ఫిల్టర్ చేయండి",
+                benefitsLabel: "ప్రయోజనాలు:",
+                eligibilityLabel: "అర్హత:",
+                deadlineLabel: "చివరి తేదీ:",
+                statusActive: "క్రియాశీల",
+                statusUpcoming: "రాబోయే",
+                statusClosed: "మూసివేయబడింది",
+                applyNowBtn: "ఇప్పుడే దరఖాస్తు చేసుకోండి",
+                moreInfoBtn: "మరింత సమాచారం",
+                ongoingDeadline: "కొనసాగుతుంది"
+            },
+            kn: {
+                // Login Page
+                loginTitle: "ಆಗ್ರಿ-ಮಾರ್ಕೆಟ್",
+                labelFirstName: "ಮೊದಲ ಹೆಸರು",
+                labelLastName: "ಕೊನೆಯ ಹೆಸರು",
+                labelGender: "ಲಿಂಗ",
+                optionSelectGender: "ಲಿಂಗವನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+                optionMale: "ಪುರುಷ",
+                optionFemale: "ಮಹಿಳೆ",
+                optionOther: "ಇತರೆ",
+                labelEmail: "ಇಮೇಲ್ ID",
+                labelPassword: "ಪಾಸ್ವರ್ಡ್",
+                labelLoginId: "ಲಾಗಿನ್ ID",
+                labelLoginPassword: "ಲಾಗಿನ್ ಪಾಸ್ವರ್ಡ್",
+                labelLocation: "ಸ್ಥಳ/ನಗರ",
+                btnLogin: "ಲಾಗಿನ್ / ನೋಂದಣಿ",
+                
+                // Dashboard
+                dashboardTitle: "ಆಗ್ರಿ-ಮಾರ್ಕೆಟ್ ಗೆ ಸುಸ್ವಾಗತ",
+                dashboardSubtitle: "ಕೃಷಿ ಅಗತ್ಯಗಳಿಗಾಗಿ ನಿಮ್ಮ ಒಂದು-ಸ್ಟಾಪ್ ಪರಿಹಾರ",
+                tempLabel: "ರಿಯಲ್-ಟೈಮ್ ತಾಪಮಾನ",
+                climateLabel: "ಹವಾಮಾನ ಸ್ಥಿತಿ",
+                locationLabel: "ನಿಮ್ಮ ಸ್ಥಳ",
+                cropRecommendationLabel: "ಬೆಳೆ ಶಿಫಾರಸುಗಳು",
+                cropRecommendationDesc: "ಬೆಳೆಯಲು ಉತ್ತಮ ಬೆಳೆಗಳ ಸಲಹೆಗಳನ್ನು ಪಡೆಯಿರಿ",
+                buyProductsLabel: "ಕೃಷಿ ಉತ್ಪನ್ನಗಳನ್ನು ಖರೀದಿಸಿ",
+                buyProductsDesc: "ಕೀಟನಾಶಕಗಳು, ಪೀಡನಾಶಕಗಳು ಮತ್ತು ಇನ್ನಷ್ಟನ್ನು ಖರೀದಿಸಿ",
+                viewCropsLabel: "ಕೃಷಿ ಬೆಳೆಗಳನ್ನು ವೀಕ್ಷಿಸಿ",
+                viewCropsDesc: "ವಿವಿಧ ಬೆಳೆಗಳು ಮತ್ತು ಅವುಗಳ ವಿವರಗಳನ್ನು ಅನ್ವೇಷಿಸಿ",
+                cropCalendarLabel: "ಬೆಳೆ ಕ್ಯಾಲೆಂಡರ್ & ಜ್ಞಾಪಕಗಳು",
+                cropCalendarDesc: "ನಿಮ್ಮ ಕೃಷಿ ಚಟುವಟಿಕೆಗಳನ್ನು ಶೆಡ್ಯೂಲ್ ಮಾಡಿ ಮತ್ತು ಟ್ರ್ಯಾಕ್ ಮಾಡಿ",
+                diseaseDetectionLabel: "ಬೆಳೆ ರೋಗ ಪತ್ತೆ",
+                diseaseDetectionDesc: "ಬೆಳೆ ಚಿತ್ರಗಳಿಂದ ರೋಗಗಳನ್ನು ಪತ್ತೆಹಚ್ಚಿ",
+                governmentSchemesLabel: "ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು",
+                governmentSchemesDesc: "ಕೃಷಿ ಯೋಜನೆಗಳನ್ನು ಆವಿಷ್ಕರಿಸಿ ಮತ್ತು ಅರ್ಜಿ ಸಲ್ಲಿಸಿ",
+                
+                // Crop Recommendation Modal
+                cropModalTitle: "ಬೆಳೆ ಶಿಫಾರಸು",
+                labelCropLocation: "ಸ್ಥಳ/ನಗರ/ಜಿಲ್ಲೆ",
+                labelFieldArea: "ಕ್ಷೇತ್ರ ಪ್ರದೇಶ (ಎಕರೆ)",
+                labelSoilType: "ಮಣ್ಣಿನ ಪ್ರಕಾರ",
+                optionSelectSoil: "ಮಣ್ಣಿನ ಪ್ರಕಾರವನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+                optionSandy: "ಇಸುಕು",
+                optionClay: "ಕ್ಲೇ",
+                optionLoamy: "ಲೋಮಿ",
+                optionSilty: "ಸಿಲ್ಟ್",
+                labelPHLevel: "pH ಮಟ್ಟ",
+                labelRainfall: "ವಾರ್ಷಿಕ ಮಳೆ (ಮಿಮೀ)",
+                labelAvgTemp: "ಸರಾಸರಿ ತಾಪಮಾನ (°C)",
+                labelBudget: "ಬಜೆಟ್ (₹)",
+                btnGetRecommendations: "ಶಿಫಾರಸುಗಳನ್ನು ಪಡೆಯಿರಿ",
+                recommendedCropsLabel: "ಶಿಫಾರಸು ಮಾಡಲಾದ ಬೆಳೆಗಳು",
+                
+                // Buy Products Modal
+                productsModalTitle: "ಕೃಷಿ ಉತ್ಪನ್ನಗಳನ್ನು ಖರೀದಿಸಿ",
+                insecticidesLabel: "ಕೀಟನಾಶಕಗಳು",
+                insecticidesDesc: "ಕೀಟಗಳು ಮತ್ತು ಪೀಡೆಗಳನ್ನು ನಿಯಂತ್ರಿಸಲು ಉತ್ಪನ್ನಗಳು",
+                pesticidesLabel: "ಪೀಡನಾಶಕಗಳು",
+                pesticidesDesc: "ಪೀಡೆ ನಿಯಂತ್ರಣ ಮತ್ತು ರೋಗ ತಡೆಗಟ್ಟಲು ಉತ್ಪನ್ನಗಳು",
+                fertilizersLabel: "ಎರೆಗಳು",
+                fertilizersDesc: "ಸಸ್ಯ ಬೆಳವಣಿಗೆ ಮತ್ತು ಮಣ್ಣಿನ ಆರೋಗ್ಯಕ್ಕಾಗಿ ಪೋಷಕಾಂಶಗಳು",
+                catalystsLabel: "ವೃದ್ಧಿ ಉತ್ಪ್ರೇರಕಗಳು",
+                catalystsDesc: "ಬೆಳೆ ಬೆಳವಣಿಗೆ ಮತ್ತು ಇಳುವರಿ ಹೆಚ್ಚಿಸಿ",
+                amazonInsecticides: "ಅಮೆಜಾನ್ ನಲ್ಲಿ ಖರೀದಿಸಿ",
+                flipkartInsecticides: "ಫ್ಲಿಪ್ಕಾರ್ಟ್ ನಲ್ಲಿ ಖರೀದಿಸಿ",
+                amazonPesticides: "ಅಮೆಜಾನ್ ನಲ್ಲಿ ಖರイドಿಸಿ",
+                flipkartPesticides: "ಫ್ಲಿಪ್ಕಾರ್ಟ್ ನಲ್ಲಿ ಖರೀದಿಸಿ",
+                amazonFertilizers: "ಅಮೆಜಾನ್ ನಲ್ಲಿ ಖರೀದಿಸಿ",
+                flipkartFertilizers: "ಫ್ಲಿಪ್ಕಾರ್ಟ್ ನಲ್ಲಿ ಖರೀದಿಸಿ",
+                amazonCatalysts: "ಅಮೆಜಾನ್ ನಲ್ಲಿ ಖರೀದಿಸಿ",
+                flipkartCatalysts: "ಫ್ಲಿಪ್ಕಾರ್ಟ್ ನಲ್ಲಿ ಖರೀದಿಸಿ",
+                
+                // View Crops Modal
+                cropsModalTitle: "ಕೃಷಿ ಬೆಳೆಗಳು",
+                durationLabel: "ಅವಧಿ:",
+                soilTypeLabel: "ಮಣ್ಣಿನ ಪ್ರಕಾರ:",
+                profitLabel: "ಲಾಭ/ಎಕರೆ:",
+                seasonLabel: "ಋತು:",
+                phLabel: "pH ಮಟ್ಟ:",
+                buySeedsLabel: "ಬೀಜಗಳನ್ನು ಖರೀದಿಸಿ",
+                
+                // Crop Calendar Modal
+                calendarModalTitle: "ಬೆಳೆ ಕ್ಯಾಲೆಂಡರ್ & ಜ್ಞಾಪಕಗಳು",
+                addReminderLabel: "ಹೊಸ ಜ್ಞಾಪಕವನ್ನು ಸೇರಿಸಿ",
+                labelReminderTitle: "ಕಾರ್ಯ ಶೀರ್ಷಿಕೆ",
+                labelReminderCrop: "ಬೆಳೆ (ಐಚ್ಛಿಕ)",
+                labelReminderDate: "ದಿನಾಂಕ",
+                labelReminderPriority: "ಆದ್ಯತೆ",
+                labelReminderNotes: "ಟಿಪ್ಪಣಿಗಳು (ಐಚ್ಛಿಕ)",
+                btnAddReminder: "ಜ್ಞಾಪಕ ಸೇರಿಸಿ",
+                calendarTitle: "ಬೆಳೆ ಕ್ಯಾಲೆಂಡರ್",
+                upcomingRemindersLabel: "ಮುಂಬರುವ ಜ್ಞಾಪಕಗಳು",
+                
+                // Disease Detection Modal
+                diseaseDetectionModalTitle: "ಬೆಳೆ ರೋಗ ಪತ್ತೆ",
+                diseaseDetectionModalDesc: "ಸಂಭಾವ್ಯ ರೋಗಗಳನ್ನು ಪತ್ತೆಹಚ್ಚಲು ಮತ್ತು ಚಿಕಿತ್ಸೆ ಶಿಫಾರಸುಗಳನ್ನು ಪಡೆಯಲು ನಿಮ್ಮ ಬೆಳೆಯ ಚಿತ್ರವನ್ನು ಅಪ್ಲೋಡ್ ಮಾಡಿ.",
+                uploadTitle: "ಬೆಳೆ ಚಿತ್ರ ಅಪ್ಲೋಡ್ ಮಾಡಿ",
+                uploadDesc: "ಬ್ರೌಸ್ ಮಾಡಲು ಕ್ಲಿಕ್ ಮಾಡಿ ಅಥವಾ ಚಿತ್ರವನ್ನು ಎಳೆಯಿರಿ ಮತ್ತು ಬಿಡಿ",
+                uploadFormat: "ಬೆಂಬಲಿತ ಸ್ವರೂಪಗಳು: JPG, PNG, JPEG",
+                detectButtonText: "ರೋಗವನ್ನು ಪತ್ತೆಹಚ್ಚಿ",
+                resetButtonText: "ರೀಸೆಟ್ ಮಾಡಿ",
+                resultsTitle: "ಪತ್ತೆಹಚ್ಚುವ ಫಲಿತಾಂಶಗಳು",
+                treatmentTitle: "ಶಿಫಾರಸು ಮಾಡಲಾದ ಚಿಕಿತ್ಸೆ:",
+                buyFungicide: "ಫಂಗಿಸೈಡ್ ಖರೀದಿಸಿ",
+                buyFungicideFlipkart: "ಫ್ಲಿಪ್ಕಾರ್ಟ್ ನಲ್ಲಿ ಖರೀದಿಸಿ",
+                historyTitle: "ಪತ್ತೆಹಚ್ಚುವ ಇತಿಹಾಸ",
+                noHistoryText: "ಇನ್ನೂ ಪತ್ತೆಹಚ್ಚುವ ಇತಿಹಾಸ ಇಲ್ಲ.",
+                
+                // Government Schemes Modal
+                schemesModalTitle: "ರೈತರಿಗಾಗಿ ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು",
+                schemesModalDesc: "ನಿಮ್ಮ ಕೃಷಿ ಚಟುವಟಿಕೆಗಳನ್ನು ಬೆಂಬಲಿಸಲು ವಿವಿಧ ಸರ್ಕಾರಿ ಕೃಷಿ ಯೋಜನೆಗಳನ್ನು ಆವಿಷ್ಕರಿಸಿ ಮತ್ತು ಅರ್ಜಿ ಸಲ್ಲಿಸಿ.",
+                filterTitle: "ಯೋಜನೆಗಳನ್ನು ಫಿಲ್ಟರ್ ಮಾಡಿ",
+                benefitsLabel: "ಲಾಭಗಳು:",
+                eligibilityLabel: "ಅರ್ಹತೆ:",
+                deadlineLabel: "ಕೊನೆಯ ದಿನಾಂಕ:",
+                statusActive: "ಸಕ್ರಿಯ",
+                statusUpcoming: "ಮುಂಬರುವ",
+                statusClosed: "ಮುಚ್ಚಿದ",
+                applyNowBtn: "ಈಗಲೇ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ",
+                moreInfoBtn: "ಹೆಚ್ಚಿನ ಮಾಹಿತಿ",
+                ongoingDeadline: "ಚಾಲ್ತಿಯಲ್ಲಿದೆ"
+            }
+        };
+
+        // Set initial language
+        let currentLanguage = 'en';
+
+        // Reminders data structure
+        let reminders = JSON.parse(localStorage.getItem('agriMarketReminders')) || [];
+
+        // Disease detection history
+        let detectionHistory = JSON.parse(localStorage.getItem('agriMarketDetectionHistory')) || [];
+
+        // Calendar variables
+        let currentDate = new Date();
+        let currentMonth = currentDate.getMonth();
+        let currentYear = currentDate.getFullYear();
+
+        // Handle login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const location = document.getElementById('location').value;
+            document.getElementById('userLocation').textContent = location;
+            
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            updateWeather();
+        });
+
+        // Handle crop recommendation form submission
+        document.getElementById('cropForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const soilType = document.getElementById('soilType').value;
+            const phLevel = parseFloat(document.getElementById('phLevel').value);
+            
+            // Filter suitable crops (simple algorithm for demo)
+            let suitableCrops = crops.filter(crop => {
+                const phRange = crop.phLevel.split('-').map(parseFloat);
+                return crop.soilType.toLowerCase() === soilType.toLowerCase() && 
+                       phLevel >= phRange[0] && phLevel <= phRange[1];
+            });
+            
+            // If no exact matches, show all crops
+            if (suitableCrops.length === 0) {
+                suitableCrops = crops;
+            }
+            
+            // Display results
+            const resultsList = document.getElementById('cropResultsList');
+            resultsList.innerHTML = '';
+            
+            suitableCrops.forEach(crop => {
+                const cropItem = document.createElement('div');
+                cropItem.className = 'crop-item';
+                cropItem.innerHTML = `
+                    <h4>${crop.name}</h4>
+                    <p><strong>${translations[currentLanguage].durationLabel}</strong> ${crop.duration}</p>
+                    <p><strong>${translations[currentLanguage].soilTypeLabel}</strong> ${crop.soilType}</p>
+                    <p><strong>${translations[currentLanguage].profitLabel}</strong> ${crop.profitPerAcre}/acre</p>
+                    <p><strong>${translations[currentLanguage].phLabel}</strong> ${crop.phLevel}</p>
+                    <p><strong>${translations[currentLanguage].seasonLabel}</strong> ${crop.season}</p>
+                    
+                    <div class="rating-container">
+                        <div class="rating-summary">
+                            <div class="average-rating">${crop.rating.toFixed(1)}</div>
+                            <div class="rating-count">(${crop.ratingCount} ratings)</div>
+                        </div>
+                        <div class="rating-stars">
+                            ${generateStarRating(crop.rating)}
+                        </div>
+                    </div>
+                    
+                    <div class="rating-container">
+                        <div class="rating-title">Rate this recommendation:</div>
+                        <div class="rating-stars" id="rating-${crop.name}">
+                            <span class="rating-star" data-rating="1"><i class="far fa-star"></i></span>
+                            <span class="rating-star" data-rating="2"><i class="far fa-star"></i></span>
+                            <span class="rating-star" data-rating="3"><i class="far fa-star"></i></span>
+                            <span class="rating-star" data-rating="4"><i class="far fa-star"></i></span>
+                            <span class="rating-star" data-rating="5"><i class="far fa-star"></i></span>
+                        </div>
+                        <div class="rating-feedback" id="feedback-${crop.name}">
+                            <textarea placeholder="Optional: Share your experience or suggestions..."></textarea>
+                            <button class="btn" onclick="submitRating('${crop.name}')">Submit Rating</button>
+                        </div>
+                    </div>
+                    
+                    <a href="${crop.seedLink}" class="btn" target="_blank" style="margin-top: 15px;">${translations[currentLanguage].buySeedsLabel}</a>
+                `;
+                resultsList.appendChild(cropItem);
+                
+                // Set up rating interaction
+                setupRatingStars(crop.name);
+            });
+            
+            document.getElementById('recommendationResults').style.display = 'block';
+        });
+
+        // Handle reminder form submission
+        document.getElementById('reminderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('reminderTitle').value;
+            const crop = document.getElementById('reminderCrop').value;
+            const date = document.getElementById('reminderDate').value;
+            const priority = document.getElementById('reminderPriority').value;
+            const notes = document.getElementById('reminderNotes').value;
+            
+            // Add new reminder
+            addReminder(title, crop, date, priority, notes);
+            
+            // Reset form
+            this.reset();
+        });
+
+        // Generate star rating HTML
+        function generateStarRating(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            
+            for (let i = 1; i <= 5; i++) {
+                if (i <= fullStars) {
+                    stars += '<i class="fas fa-star"></i>';
+                } else if (i === fullStars + 1 && hasHalfStar) {
+                    stars += '<i class="fas fa-star-half-alt"></i>';
+                } else {
+                    stars += '<i class="far fa-star"></i>';
+                }
+            }
+            
+            return stars;
+        }
+
+        // Set up rating stars interaction
+        function setupRatingStars(cropName) {
+            const stars = document.querySelectorAll(`#rating-${cropName} .rating-star`);
+            let selectedRating = 0;
+            
+            stars.forEach(star => {
+                star.addEventListener('mouseover', function() {
+                    const rating = parseInt(this.dataset.rating);
+                    highlightStars(stars, rating);
+                });
+                
+                star.addEventListener('mouseout', function() {
+                    highlightStars(stars, selectedRating);
+                });
+                
+                star.addEventListener('click', function() {
+                    selectedRating = parseInt(this.dataset.rating);
+                    highlightStars(stars, selectedRating);
+                    document.getElementById(`feedback-${cropName}`).style.display = 'block';
+                });
+            });
+            
+            function highlightStars(stars, rating) {
+                stars.forEach(star => {
+                    const starRating = parseInt(star.dataset.rating);
+                    if (starRating <= rating) {
+                        star.innerHTML = '<i class="fas fa-star"></i>';
+                        star.classList.add('active');
+                    } else {
+                        star.innerHTML = '<i class="far fa-star"></i>';
+                        star.classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        // Submit rating
+        function submitRating(cropName) {
+            const stars = document.querySelectorAll(`#rating-${cropName} .rating-star`);
+            let rating = 0;
+            
+            stars.forEach(star => {
+                if (star.classList.contains('active')) {
+                    rating = parseInt(star.dataset.rating);
+                }
+            });
+            
+            if (rating === 0) {
+                alert('Please select a rating');
+                return;
+            }
+            
+            const feedback = document.querySelector(`#feedback-${cropName} textarea`).value;
+            
+            // In a real application, this would be sent to a server
+            // For this demo, we'll just show a confirmation
+            alert(`Thank you for your ${rating}-star rating for ${cropName}!`);
+            
+            // Reset the rating UI
+            stars.forEach(star => {
+                star.innerHTML = '<i class="far fa-star"></i>';
+                star.classList.remove('active');
+            });
+            document.querySelector(`#feedback-${cropName} textarea`).value = '';
+            document.getElementById(`feedback-${cropName}`).style.display = 'none';
+        }
+
+        // Add a new reminder
+        function addReminder(title, crop, date, priority, notes) {
+            const newReminder = {
+                id: Date.now(),
+                title,
+                crop,
+                date,
+                priority,
+                notes,
+                completed: false
+            };
+            
+            reminders.push(newReminder);
+            saveReminders();
+            renderReminders();
+            generateCalendar();
+        }
+
+        // Toggle reminder completion status
+        function toggleReminder(id) {
+            reminders = reminders.map(reminder => {
+                if (reminder.id === id) {
+                    return { ...reminder, completed: !reminder.completed };
+                }
+                return reminder;
+            });
+            
+            saveReminders();
+            renderReminders();
+            generateCalendar();
+        }
+
+        // Delete a reminder
+        function deleteReminder(id) {
+            reminders = reminders.filter(reminder => reminder.id !== id);
+            saveReminders();
+            renderReminders();
+            generateCalendar();
+        }
+
+        // Save reminders to localStorage
+        function saveReminders() {
+            localStorage.setItem('agriMarketReminders', JSON.stringify(reminders));
+        }
+
+        // Save detection history to localStorage
+        function saveDetectionHistory() {
+            localStorage.setItem('agriMarketDetectionHistory', JSON.stringify(detectionHistory));
+        }
+
+        // Render reminders list
+        function renderReminders() {
+            const container = document.getElementById('remindersContainer');
+            container.innerHTML = '';
+            
+            // Sort reminders by date
+            const sortedReminders = [...reminders].sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            // Get today's date for filtering
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            // Filter upcoming reminders (from today onward)
+            const upcomingReminders = sortedReminders.filter(reminder => {
+                const reminderDate = new Date(reminder.date);
+                reminderDate.setHours(0, 0, 0, 0);
+                return reminderDate >= today;
+            });
+            
+            if (upcomingReminders.length === 0) {
+                container.innerHTML = '<p>No upcoming reminders. Add one using the form above.</p>';
+                return;
+            }
+            
+            upcomingReminders.forEach(reminder => {
+                const reminderDate = new Date(reminder.date);
+                const formattedDate = reminderDate.toLocaleDateString('en-US', { 
+                    weekday: 'short', 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: 'numeric' 
+                });
+                
+                const reminderItem = document.createElement('div');
+                reminderItem.className = `reminder-item ${reminder.completed ? 'completed' : ''}`;
+                reminderItem.innerHTML = `
+                    <div class="reminder-details">
+                        <div class="reminder-title">
+                            ${reminder.title}
+                            ${reminder.crop ? ` - ${reminder.crop}` : ''}
+                            <span class="priority-badge priority-${reminder.priority}">${reminder.priority}</span>
+                        </div>
+                        <div class="reminder-date">${formattedDate}</div>
+                        ${reminder.notes ? `<div class="reminder-notes">${reminder.notes}</div>` : ''}
+                    </div>
+                    <div class="reminder-actions">
+                        <button class="btn btn-small" onclick="toggleReminder(${reminder.id})">
+                            <i class="fas fa-${reminder.completed ? 'undo' : 'check'}"></i>
+                        </button>
+                        <button class="btn btn-small btn-red" onclick="deleteReminder(${reminder.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                
+                container.appendChild(reminderItem);
+            });
+        }
+
+        // Generate calendar view
+        function generateCalendar() {
+            const calendarBody = document.getElementById('calendarBody');
+            calendarBody.innerHTML = '';
+            
+            // Set the header text
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                               'July', 'August', 'September', 'October', 'November', 'December'];
+            document.getElementById('currentMonthYear').textContent = 
+                `${monthNames[currentMonth]} ${currentYear}`;
+            
+            // Get first day of month and number of days
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            
+            // Create empty cells for days before the first day of the month
+            for (let i = 0; i < firstDay; i++) {
+                const emptyCell = document.createElement('div');
+                emptyCell.className = 'calendar-day empty';
+                calendarBody.appendChild(emptyCell);
+            }
+            
+            // Create cells for each day of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayCell = document.createElement('div');
+                dayCell.className = 'calendar-day';
+                
+                const dayNumber = document.createElement('div');
+                dayNumber.className = 'day-number';
+                dayNumber.textContent = day;
+                dayCell.appendChild(dayNumber);
+                
+                // Check for reminders on this day
+                const currentDateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const dayReminders = reminders.filter(reminder => reminder.date === currentDateStr);
+                
+                // Add reminders to the day cell
+                dayReminders.forEach(reminder => {
+                    const eventElement = document.createElement('div');
+                    eventElement.className = `calendar-event ${reminder.priority}-priority`;
+                    eventElement.textContent = reminder.title;
+                    eventElement.title = `${reminder.title}${reminder.crop ? ` - ${reminder.crop}` : ''}`;
+                    dayCell.appendChild(eventElement);
+                });
+                
+                calendarBody.appendChild(dayCell);
+            }
+        }
+
+        // Navigate to previous month
+        document.getElementById('prevMonth').addEventListener('click', function() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            generateCalendar();
+        });
+
+        // Navigate to next month
+        document.getElementById('nextMonth').addEventListener('click', function() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            generateCalendar();
+        });
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            
+            // If opening the calendar modal, generate the calendar
+            if (modalId === 'cropCalendarModal') {
+                generateCalendar();
+                renderReminders();
+            }
+            
+            // If opening the disease detection modal, render history
+            if (modalId === 'diseaseDetectionModal') {
+                renderDetectionHistory();
+            }
+            
+            // If opening the government schemes modal, setup filters
+            if (modalId === 'governmentSchemesModal') {
+                setupSchemeFilters();
+            }
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            
+            // Hide any application forms when closing modal
+            if (modalId === 'governmentSchemesModal') {
+                const forms = document.querySelectorAll('.application-form');
+                forms.forEach(form => {
+                    form.style.display = 'none';
+                });
+            }
+        }
+
+        // Close modal if clicked outside of content
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    modal.style.display = 'none';
+                });
+            }
+        }
+
+        // Simulate weather data
+        function updateWeather() {
+            // In a real application, this would fetch data from a weather API
+            const temperature = Math.round(Math.random() * 20 + 20); // Random temp between 20-40°C
+            const conditions = ['Sunny', 'Cloudy', 'Rainy', 'Partly Cloudy'];
+            const condition = conditions[Math.floor(Math.random() * conditions.length)];
+            
+            document.getElementById('temperature').textContent = `${temperature}°C`;
+            document.getElementById('climate').textContent = condition;
+        }
+
+        // Update weather every 30 seconds
+        setInterval(updateWeather, 30000);
+
+        // Language selector functionality
+        function setupLanguageSelector() {
+            const languageBtn = document.getElementById('languageBtn');
+            const languageOptions = document.getElementById('languageOptions');
+            const dashboardLanguageBtn = document.getElementById('dashboardLanguageBtn');
+            const dashboardLanguageOptions = document.getElementById('dashboardLanguageOptions');
+            
+            // Toggle language options for login page
+            languageBtn.addEventListener('click', function() {
+                languageOptions.classList.toggle('show');
+            });
+            
+            // Toggle language options for dashboard
+            dashboardLanguageBtn.addEventListener('click', function() {
+                dashboardLanguageOptions.classList.toggle('show');
+            });
+            
+            // Handle language selection for login page
+            document.querySelectorAll('#languageOptions .language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    changeLanguage(lang);
+                    languageOptions.classList.remove('show');
+                });
+            });
+            
+            // Handle language selection for dashboard
+            document.querySelectorAll('#dashboardLanguageOptions .language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    changeLanguage(lang);
+                    dashboardLanguageOptions.classList.remove('show');
+                });
+            });
+            
+            // Close language dropdown when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!languageBtn.contains(event.target) && !languageOptions.contains(event.target)) {
+                    languageOptions.classList.remove('show');
+                }
+                if (!dashboardLanguageBtn.contains(event.target) && !dashboardLanguageOptions.contains(event.target)) {
+                    dashboardLanguageOptions.classList.remove('show');
+                }
+            });
+        }
+        
+        // Change language function
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update all text elements with translations
+            Object.keys(translations[lang]).forEach(key => {
+                const elements = document.querySelectorAll(`[id="${key}"]`);
+                elements.forEach(element => {
+                    if (element.tagName === 'INPUT' || element.tagName === 'OPTION') {
+                        if (element.placeholder) {
+                            element.placeholder = translations[lang][key];
+                        } else {
+                            element.textContent = translations[lang][key];
+                        }
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                });
+            });
+            
+            // Update current language display
+            document.getElementById('currentLanguage').textContent = 
+                document.querySelector(`#languageOptions .language-option[data-lang="${lang}"] span`).textContent;
+            document.getElementById('dashboardCurrentLanguage').textContent = 
+                document.querySelector(`#dashboardLanguageOptions .language-option[data-lang="${lang}"] span`).textContent;
+        }
+        
+        // Initialize language selector
+        setupLanguageSelector();
+
+        // Set today's date as default for the reminder form
+        document.getElementById('reminderDate').valueAsDate = new Date();
+
+        // Disease Detection Functionality
+        function initDiseaseDetection() {
+            const uploadArea = document.getElementById('uploadArea');
+            const imageUpload = document.getElementById('imageUpload');
+            const previewContainer = document.getElementById('previewContainer');
+            const previewImage = document.getElementById('previewImage');
+            const detectButton = document.getElementById('detectButton');
+            const resetButton = document.getElementById('resetButton');
+            const spinner = document.getElementById('detectionSpinner');
+            const resultsContainer = document.getElementById('resultsContainer');
+            
+            // Handle click on upload area
+            uploadArea.addEventListener('click', function() {
+                imageUpload.click();
+            });
+            
+            // Handle file selection
+            imageUpload.addEventListener('change', function(e) {
+                if (this.files && this.files[0]) {
+                    const file = this.files[0];
+                    
+                    // Check if file is an image
+                    if (!file.type.match('image.*')) {
+                        alert('Please select an image file');
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        previewImage.src = e.target.result;
+                        previewContainer.style.display = 'block';
+                        uploadArea.classList.add('has-image');
+                        detectButton.disabled = false;
+                    }
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Handle drag and drop
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.style.backgroundColor = '#e8f5e9';
+            });
+            
+            uploadArea.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                this.style.backgroundColor = '#f9fdf8';
+            });
+            
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.style.backgroundColor = '#f9fdf8';
+                
+                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                    const file = e.dataTransfer.files[0];
+                    
+                    // Check if file is an image
+                    if (!file.type.match('image.*')) {
+                        alert('Please select an image file');
+                        return;
+                    }
+                    
+                    imageUpload.files = e.dataTransfer.files;
+                    
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        previewImage.src = e.target.result;
+                        previewContainer.style.display = 'block';
+                        uploadArea.classList.add('has-image');
+                        detectButton.disabled = false;
+                    }
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Handle detect button click
+            detectButton.addEventListener('click', function() {
+                // Show loading spinner
+                spinner.style.display = 'block';
+                resultsContainer.style.display = 'none';
+                
+                // Simulate AI processing (in a real app, this would call an API)
+                setTimeout(function() {
+                    // Hide spinner
+                    spinner.style.display = 'none';
+                    
+                    // Show results
+                    resultsContainer.style.display = 'block';
+                    
+                    // Simulate detection result
+                    simulateDiseaseDetection();
+                }, 2000);
+            });
+            
+            // Handle reset button click
+            resetButton.addEventListener('click', function() {
+                resetDiseaseDetection();
+            });
+        }
+        
+        // Simulate disease detection (in a real app, this would use an AI model)
+        function simulateDiseaseDetection() {
+            // Randomly select a disease (or healthy)
+            const randomIndex = Math.floor(Math.random() * diseases.length);
+            const detectedDisease = diseases[randomIndex];
+            const confidence = (Math.random() * 0.3 + 0.7) * 100; // 70-100% confidence
+            
+            // Update UI with results
+            document.getElementById('detectedDisease').textContent = detectedDisease.name;
+            document.getElementById('confidenceLevel').textContent = `${confidence.toFixed(0)}% confidence`;
+            document.getElementById('diseaseDescription').textContent = detectedDisease.description;
+            
+            // Update treatments
+            const treatmentList = document.getElementById('treatmentList');
+            treatmentList.innerHTML = '';
+            
+            detectedDisease.treatments.forEach(treatment => {
+                const li = document.createElement('li');
+                li.textContent = treatment;
+                treatmentList.appendChild(li);
+            });
+            
+            // Update product links
+            const productLinks = document.querySelector('.product-links');
+            productLinks.innerHTML = '';
+            
+            if (detectedDisease.products.length > 0) {
+                detectedDisease.products.forEach(product => {
+                    const amazonLink = document.createElement('a');
+                    amazonLink.href = product.amazon;
+                    amazonLink.className = 'btn';
+                    amazonLink.target = '_blank';
+                    amazonLink.textContent = translations[currentLanguage].buyFungicide;
+                    
+                    const flipkartLink = document.createElement('a');
+                    flipkartLink.href = product.flipkart;
+                    flipkartLink.className = 'btn';
+                    flipkartLink.target = '_blank';
+                    flipkartLink.textContent = translations[currentLanguage].buyFungicideFlipkart;
+                    
+                    productLinks.appendChild(amazonLink);
+                    productLinks.appendChild(flipkartLink);
+                });
+            } else {
+                productLinks.style.display = 'none';
+            }
+            
+            // Add to history
+            addToDetectionHistory(detectedDisease.name, confidence);
+        }
+        
+        // Add detection to history
+        function addToDetectionHistory(diseaseName, confidence) {
+            const historyItem = {
+                id: Date.now(),
+                date: new Date().toISOString(),
+                disease: diseaseName,
+                confidence: confidence
+            };
+            
+            detectionHistory.unshift(historyItem);
+            saveDetectionHistory();
+            renderDetectionHistory();
+        }
+        
+        // Render detection history
+        function renderDetectionHistory() {
+            const historyList = document.getElementById('historyList');
+            historyList.innerHTML = '';
+            
+            if (detectionHistory.length === 0) {
+                historyList.innerHTML = `<p>${translations[currentLanguage].noHistoryText}</p>`;
+                return;
+            }
+            
+            detectionHistory.slice(0, 5).forEach(item => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                
+                const date = new Date(item.date);
+                const formattedDate = date.toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                historyItem.innerHTML = `
+                    <div class="history-date">${formattedDate}</div>
+                    <div class="history-disease">${item.disease} <span class="confidence">${item.confidence.toFixed(0)}%</span></div>
+                `;
+                
+                historyItem.addEventListener('click', function() {
+                    // Load this historical detection
+                    loadHistoricalDetection(item);
+                });
+                
+                historyList.appendChild(historyItem);
+            });
+        }
+        
+        // Load historical detection
+        function loadHistoricalDetection(item) {
+            const disease = diseases.find(d => d.name === item.disease);
+            
+            if (disease) {
+                // Update UI with historical results
+                document.getElementById('detectedDisease').textContent = disease.name;
+                document.getElementById('confidenceLevel').textContent = `${item.confidence.toFixed(0)}% confidence`;
+                document.getElementById('diseaseDescription').textContent = disease.description;
+                
+                // Update treatments
+                const treatmentList = document.getElementById('treatmentList');
+                treatmentList.innerHTML = '';
+                
+                disease.treatments.forEach(treatment => {
+                    const li = document.createElement('li');
+                    li.textContent = treatment;
+                    treatmentList.appendChild(li);
+                });
+                
+                // Update product links
+                const productLinks = document.querySelector('.product-links');
+                productLinks.innerHTML = '';
+                
+                if (disease.products.length > 0) {
+                    disease.products.forEach(product => {
+                        const amazonLink = document.createElement('a');
+                        amazonLink.href = product.amazon;
+                        amazonLink.className = 'btn';
+                        amazonLink.target = '_blank';
+                        amazonLink.textContent = translations[currentLanguage].buyFungicide;
+                        
+                        const flipkartLink = document.createElement('a');
+                        flipkartLink.href = product.flipkart;
+                        flipkartLink.className = 'btn';
+                        flipkartLink.target = '_blank';
+                        flipkartLink.textContent = translations[currentLanguage].buyFungicideFlipkart;
+                        
+                        productLinks.appendChild(amazonLink);
+                        productLinks.appendChild(flipkartLink);
+                    });
+                } else {
+                    productLinks.style.display = 'none';
+                }
+                
+                // Show results
+                document.getElementById('resultsContainer').style.display = 'block';
+            }
+        }
+        
+        // Reset disease detection UI
+        function resetDiseaseDetection() {
+            document.getElementById('imageUpload').value = '';
+            document.getElementById('previewContainer').style.display = 'none';
+            document.getElementById('previewImage').src = '';
+            document.getElementById('uploadArea').classList.remove('has-image');
+            document.getElementById('detectButton').disabled = true;
+            document.getElementById('resultsContainer').style.display = 'none';
+            document.getElementById('detectionSpinner').style.display = 'none';
+        }
+        
+        // Initialize disease detection when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initDiseaseDetection();
+        });
+        
+        // Government Schemes functionality
+        function setupSchemeFilters() {
+            const filterOptions = document.querySelectorAll('.filter-option');
+            
+            filterOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove active class from all options
+                    filterOptions.forEach(opt => opt.classList.remove('active'));
+                    
+                    // Add active class to clicked option
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    filterSchemes(filter);
+                });
+            });
+        }
+        
+        function filterSchemes(filter) {
+            const schemeItems = document.querySelectorAll('.scheme-item');
+            
+            schemeItems.forEach(item => {
+                if (filter === 'all') {
+                    item.style.display = 'block';
+                } else {
+                    if (item.getAttribute('data-type') === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                }
+            });
+        }
+        
+        function showSchemeApplication(schemeId) {
+            // Hide all other forms first
+            const allForms = document.querySelectorAll('.application-form');
+            allForms.forEach(form => {
+                form.style.display = 'none';
+            });
+            
+            // Show the selected form
+            document.getElementById(schemeId + '-form').style.display = 'block';
+            
+            // Scroll to the form
+            document.getElementById(schemeId + '-form').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function hideApplicationForm(schemeId) {
+            document.getElementById(schemeId + '-form').style.display = 'none';
+        }
+        
+        function showSchemeDetails(schemeId) {
+            alert(`More information about ${schemeId} would be shown here. In a real application, this would display detailed information about the scheme.`);
+        }
+    </script>
+</body>
+</html>
